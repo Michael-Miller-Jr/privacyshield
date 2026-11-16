@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Privacy Shield — Diagnostic Test</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #6366f1;
+            --success: #10b981;
+            --border: #334155;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 40px 20px;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.5;
+        }
+        h1 { font-size: 24px; margin-bottom: 5px; }
+        .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        
+        button {
+            width: 100%; padding: 12px; background: var(--accent); color: white;
+            border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #4f46e5; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .result-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+        }
+
+        .success-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--success);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .checkmark { font-size: 32px; }
+
+        .data-row {
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 13px;
+            word-wrap: break-word;
+        }
+        .data-label { color: var(--text-muted); margin-bottom: 5px; display: block; }
+        
+        .code-box {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid var(--border);
+        }
+        .code-box.safe { border-left-color: var(--success); }
+
+        .token-highlight {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .plain-highlight {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Privacy Shield Test</h1>
+    <p class="subtitle">Outbound Interception Verification</p>
+
+    <div class="card">
+        <h3>Test Data Obfuscation</h3>
+        <p class="subtitle" style="margin-bottom: 15px;">Click below to ask the extension to tokenize the data. This bypasses the network and proves the extension is actively modifying your payloads.</p>
+        
+        <button id="testBtn">Run Diagnostic</button>
+
+        <div id="result-box" class="result-box">
+            <div class="success-header">
+                <span class="checkmark">✅</span>
+                <span>Extension Pipeline Successful</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+                The extension successfully intercepted the payload, swapped it for a token, and can successfully restore it.
+            </p>
+
+            <div class="data-row">
+                <span class="data-label">1. Original Data (What you typed):</span>
+                <div class="code-box">
+                    "email": "<span class="plain-highlight">test@example.com</span>"
+                </div>
+            </div>
+
+            <div class="data-row">
+                <span class="data-label">2. Tokenized Data (The Middleman):</span>
+                <div class="code-box safe">
+                    "email": "<span class="token-highlight" id="test-output-token"></span>"
+                </div>
+            </div>
+
+            <div class="data-row" style="margin-bottom: 0;">
+                <span class="data-label">3. Rehydrated Data (Restored in DOM):</span>
+                <div class="code-box safe" style="border-left-color: var(--accent);">
+                    "email": "<span class="token-highlight" style="background: rgba(99,102,241,0.2); color: #818cf8;" id="test-rehydrate-token"></span>"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the script externally to comply with MV3 -->
+    <script src="test.js"></script>
+</body>
+</html>

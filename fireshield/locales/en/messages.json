@@ -1,0 +1,22 @@
+﻿{
+  "extName": {
+    "message": "Privacy  Shield",
+    "description": "Extension name."
+  },
+  "extDesc": {
+    "message": "Purpose-scoped, reversible redaction for AI-assisted form filling.",
+    "description": "Extension description."
+  },
+  "killSwitchLabel": {
+    "message": "Disable on this site",
+    "description": "Label for the master kill switch."
+  },
+  "killSwitchHint": {
+    "message": "For important forms where no plugin should intervene (e.g. government, legal, or official submissions). The AI will see your raw data — use only when you trust the destination.",
+    "description": "Hint text under the kill switch."
+  },
+  "footerCopyright": {
+    "message": "Privacy Shield Contributors",
+    "description": "Fallback copyright holder; override per-build via PRIVACY_FIREWALL_COPYRIGHT."
+  }
+}
